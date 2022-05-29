@@ -20,6 +20,7 @@ export class LoggerController {
     @UseFilters(new LogExceptionFilter())
     @UseInterceptors(JsonInterceptor)
     public info(@Payload() message: string): IRes {
+        console.log('message', message);
         return this.loggerService.info(message);
     }
 
@@ -27,6 +28,7 @@ export class LoggerController {
     @UseFilters(new LogExceptionFilter())
     @UseInterceptors(JsonInterceptor)
     public error(@Payload() message: string): IRes {
+        console.log('message', message);
         return this.loggerService.error(message);
     }
 
@@ -34,6 +36,7 @@ export class LoggerController {
     @UseFilters(new LogExceptionFilter())
     @UseInterceptors(JsonInterceptor)
     public debug(@Payload() message: string): IRes {
+        console.log('message', message);
         return this.loggerService.debug(message);
     }
 }
