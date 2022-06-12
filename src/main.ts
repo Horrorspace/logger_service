@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 export const options: RmqOptions = {
     transport: Transport.RMQ,
     options: {
-        urls: ['amqp://user:BGNdWquZ@localhost:5672'],
+        urls: ['amqp://user:BGNdWquZ@rabbitmq:5672'],
         queue: 'logger',
         queueOptions: {
             durable: true,
