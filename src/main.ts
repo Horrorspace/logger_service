@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 export const options: RmqOptions = {
     transport: Transport.RMQ,
     options: {
-        urls: ['amqp://user:BGNdWquZ@microservices:5672'],
+        urls: ['amqp://user:BGNdWquZ@rabbitmq:5672'],
         queue: 'logger',
         queueOptions: {
             durable: true,
@@ -19,6 +19,7 @@ async function bootstrap() {
         AppModule,
         options,
     );
+    console.log('options', options);
     app.listen();
 }
 bootstrap();
