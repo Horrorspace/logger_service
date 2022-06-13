@@ -19,7 +19,6 @@ async function bootstrap() {
         AppModule,
         options,
     );
-    console.log('options', options);
     app.listen();
 }
 bootstrap();
