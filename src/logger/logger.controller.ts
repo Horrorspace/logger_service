@@ -30,6 +30,13 @@ export class LoggerController {
         return this.loggerService.error(message);
     }
 
+    @MessagePattern('warn')
+    @UseFilters(new LogExceptionFilter())
+    @UseInterceptors(JsonInterceptor)
+    public warn(@Payload() message: string): IRes {
+        return this.loggerService.warn(message);
+    }
+
     @MessagePattern('debug')
     @UseFilters(new LogExceptionFilter())
     @UseInterceptors(JsonInterceptor)
