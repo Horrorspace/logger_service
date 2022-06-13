@@ -46,6 +46,7 @@ export class LoggerService {
                 message: '',
             };
         } catch (e) {
+            console.error(e);
             throw new RpcException(codes.serverErr);
         }
     }
