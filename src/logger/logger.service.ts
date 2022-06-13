@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, LoggerService as ILogger } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import moment from 'moment';
 import winston from 'winston';
@@ -6,9 +6,10 @@ import { IRes, logType } from './interfaces/IRes';
 import { codes } from './enums/codes.enum';
 import { statuses } from './enums/statuses.enum';
 import { logs } from './enums/logs.enum';
+import { IError } from './interfaces/IError';
 
 @Injectable()
-export class LoggerService {
+export class LoggerService implements ILogger {
     private readonly dirname: string = './log';
     private readonly logTypes: logType[] = ['info', 'error', 'debug'];
     private logger: winston.Logger;
@@ -35,7 +36,7 @@ export class LoggerService {
         };
     }
 
-    private log(level: logType, message: string): IRes {
+    private _log(level: logType, message: string): IRes {
         try {
             this.logger.log({
                 level,
@@ -46,8 +47,11 @@ export class LoggerService {
                 message: '',
             };
         } catch (e) {
-            console.error(e);
-            throw new RpcException(codes.serverErr);
+            const error: IError = {
+                code: codes.serverErr,
+                reason: `${e}`,
+            };
+            throw new RpcException(error);
         }
     }
 
@@ -57,21 +61,33 @@ export class LoggerService {
         this.info('testMessage');
     }
 
+    public log(message: string): IRes {
+        console.log(message);
+        const level = logs.info;
+        return this._log(level, message);
+    }
+
     public info(message: string): IRes {
         console.info(message);
         const level = logs.info;
-        return this.log(level, message);
+        return this._log(level, message);
     }
 
     public error(message: string): IRes {
         console.error(message);
         const level = logs.error;
-        return this.log(level, message);
+        return this._log(level, message);
+    }
+
+    public warn(message: string): IRes {
+        console.warn(message);
+        const level = logs.warn;
+        return this._log(level, message);
     }
 
     public debug(message: string): IRes {
         console.debug(message);
         const level = logs.debug;
-        return this.log(level, message);
+        return this._log(level, message);
     }
 }
