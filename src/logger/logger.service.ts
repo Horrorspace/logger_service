@@ -54,14 +54,17 @@ export class LoggerService {
     }
 
     public info(message: string): IRes {
+        console.info(message);
         return this.log('info', message);
     }
 
     public error(message: string): IRes {
+        console.error(message);
         return this.log('error', message);
     }
 
     public debug(message: string): IRes {
+        console.debug(message);
         return this.log('debug', message);
     }
 }
