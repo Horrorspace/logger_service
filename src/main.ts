@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { RmqOptions } from '@nestjs/microservices';
 import { Transport } from '@nestjs/microservices/enums/transport.enum';
 import { AppModule } from './app.module';
+import { LoggerService } from './logger/logger.service';
 
 export async function getOptions(): Promise<RmqOptions> {
     const module = await NestFactory.create(AppModule);
@@ -39,10 +40,12 @@ export async function getOptions(): Promise<RmqOptions> {
 
 async function bootstrap() {
     const options = await getOptions();
-    const app = await NestFactory.createMicroservice<RmqOptions>(
-        AppModule,
-        options,
-    );
+    const app = await NestFactory.createMicroservice<RmqOptions>(AppModule, {
+        ...options,
+        logger: console,
+    });
+    const logger = app.get(LoggerService);
+    app.useLogger(logger);
     app.listen();
 }
 bootstrap();
