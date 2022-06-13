@@ -50,6 +50,7 @@ export class LoggerService {
     constructor() {
         const options = this.getOptions();
         this.logger = winston.createLogger(options);
+        this.info('testMessage');
     }
 
     public info(message: string): IRes {
