@@ -1,8 +1,8 @@
-type status = 'success' | 'error';
+import { IStatus } from './IStatus';
+import { logs } from '../enums/logs.enum';
 
-export type logType = 'info' | 'error' | 'debug';
+export type logType = `${logs}`;
 
-export interface IRes {
-    status: status;
+export interface IRes extends IStatus {
     message: string;
 }

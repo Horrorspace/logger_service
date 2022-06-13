@@ -3,6 +3,9 @@ import { RpcException } from '@nestjs/microservices';
 import moment from 'moment';
 import winston from 'winston';
 import { IRes, logType } from './interfaces/IRes';
+import { codes } from './enums/codes.enum';
+import { statuses } from './enums/statuses.enum';
+import { logs } from './enums/logs.enum';
 
 @Injectable()
 export class LoggerService {
@@ -39,11 +42,11 @@ export class LoggerService {
                 message,
             });
             return {
-                status: 'success',
+                status: statuses.success,
                 message: '',
             };
         } catch (e) {
-            throw new RpcException('500');
+            throw new RpcException(codes.serverErr);
         }
     }
 
@@ -55,16 +58,19 @@ export class LoggerService {
 
     public info(message: string): IRes {
         console.info(message);
-        return this.log('info', message);
+        const level = logs.info;
+        return this.log(level, message);
     }
 
     public error(message: string): IRes {
         console.error(message);
-        return this.log('error', message);
+        const level = logs.error;
+        return this.log(level, message);
     }
 
     public debug(message: string): IRes {
         console.debug(message);
-        return this.log('debug', message);
+        const level = logs.debug;
+        return this.log(level, message);
     }
 }
