@@ -10,6 +10,7 @@ COPY . .
 
 RUN npm run build
 
+# rmq
 EXPOSE 4369
 EXPOSE 5671
 EXPOSE 5672
