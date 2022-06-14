@@ -11,35 +11,29 @@ import { IRes } from './interfaces/IRes';
 import { JsonInterceptor } from './interceptors/json.interceptor';
 
 @Controller()
+@UseFilters(new LogExceptionFilter())
+@UseInterceptors(JsonInterceptor)
 export class LoggerController {
     constructor(
         @Inject(LoggerService) private readonly loggerService: LoggerService,
     ) {}
 
     @MessagePattern('info')
-    @UseFilters(new LogExceptionFilter())
-    @UseInterceptors(JsonInterceptor)
     public info(@Payload() message: string): IRes {
         return this.loggerService.info(message);
     }
 
     @MessagePattern('error')
-    @UseFilters(new LogExceptionFilter())
-    @UseInterceptors(JsonInterceptor)
     public error(@Payload() message: string): IRes {
         return this.loggerService.error(message);
     }
 
     @MessagePattern('warn')
-    @UseFilters(new LogExceptionFilter())
-    @UseInterceptors(JsonInterceptor)
     public warn(@Payload() message: string): IRes {
         return this.loggerService.warn(message);
     }
 
     @MessagePattern('debug')
-    @UseFilters(new LogExceptionFilter())
-    @UseInterceptors(JsonInterceptor)
     public debug(@Payload() message: string): IRes {
         return this.loggerService.debug(message);
     }
