@@ -40,10 +40,10 @@ export async function getOptions(): Promise<RmqOptions> {
 
 async function bootstrap() {
     const options = await getOptions();
-    const app = await NestFactory.createMicroservice<RmqOptions>(AppModule, {
-        ...options,
-        logger: console,
-    });
+    const app = await NestFactory.createMicroservice<RmqOptions>(
+        AppModule,
+        options,
+    );
     const logger = app.get(LoggerService);
     app.useLogger(logger);
     app.listen();
