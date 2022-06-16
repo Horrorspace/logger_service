@@ -4,7 +4,7 @@ import { ClientsModule, Transport, ClientProxy } from '@nestjs/microservices';
 import { AppModule } from '../src/app.module';
 import { getOptions } from '../src/main';
 import { Observable } from 'rxjs';
-import { IRes } from 'src/logger/interfaces/IRes';
+import { IRes } from '../src/logger/interfaces/IRes';
 
 describe('AppController (e2e)', () => {
     let app: INestMicroservice;
@@ -20,7 +20,7 @@ describe('AppController (e2e)', () => {
                         name: loggerService,
                         transport: Transport.RMQ,
                         options: {
-                            urls: ['amqp://localhost:5672'],
+                            urls: ['amqp://user:BGNdWquZ@localhost:5672'],
                             queue: 'logger',
                             queueOptions: {
                                 durable: true,
