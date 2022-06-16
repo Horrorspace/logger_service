@@ -58,7 +58,6 @@ export class LoggerService implements ILogger {
     constructor() {
         const options = this.getOptions();
         this.logger = winston.createLogger(options);
-        this.info('testMessage');
     }
 
     public log(message: string): IRes {
