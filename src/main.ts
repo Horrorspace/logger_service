@@ -20,11 +20,12 @@ export async function getOptions(): Promise<RmqOptions> {
         process.env.RABBITMQ_PASSWORD || configService.get('rabbitmq.password');
     const durable =
         process.env.RABBITMQ_DURABLE === 'true' ||
-        configService.get('rabbitmq.durable');
+        (process.env.RABBITMQ_DURABLE === undefined &&
+            configService.get('rabbitmq.durable'));
     const queue =
         process.env.LOGGER_SERVICE_QUEUE ||
         configService.get('logger_service.queue');
-    const url = `${protocol}://${user}:${password}@${host}${port}`;
+    const url = `${protocol}://${user}:${password}@${host}:${port}`;
     const options: RmqOptions = {
         transport: Transport.RMQ,
         options: {
